@@ -1,0 +1,14 @@
+.container{
+    text-align: center;
+    /* top:40%;
+    left:50%; */
+    position: fixed;
+    width: 500px;
+    height: 350px;
+    background-color: blueviolet;
+    border-radius: 15px;
+}
+
+.login-comp{
+    margin: 20px;
+}
