@@ -10,21 +10,21 @@ import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 
 function App() {
-  return (
+    return (
     <BrowserRouter>
-      <div className="topbar">
-        <TopBar />
-      </div>
-      <div className="sidebar">
-        <SideBar />
-      </div>
-      <div className="content">
-        <Routes>
-          <Route path="/" element={ <Sample/> } />
-          <Route path="/login" element={ <Login/> } />
-          <Route path="/signup" element={ <SignUp/> } />
-        </Routes>
-      </div>
+        <div className="topbar">
+            <TopBar />
+        </div>
+        <div className="sidebar">
+            <SideBar />
+        </div>
+        <div className="content">
+            <Routes>
+                <Route path="/sample" element={ <Sample/> } />
+                <Route path="/login" element={ <Login/> } />
+                <Route path="/signup" element={ <SignUp/> } />
+            </Routes>
+        </div>
     </BrowserRouter>
   );
 }

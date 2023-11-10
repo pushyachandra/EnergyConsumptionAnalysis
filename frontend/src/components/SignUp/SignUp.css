@@ -1,0 +1,12 @@
+.container-signup{
+    text-align: center;
+    position: fixed;
+    width: 500px;
+    height: 400px;
+    background-color: yellow;
+    border-radius: 15px;
+}
+
+.login-comp{
+    margin: 20px;
+}

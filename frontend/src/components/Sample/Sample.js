@@ -1,9 +1,11 @@
 import React from 'react'
+import { redirectIfNotLoggedIn } from '../Auth';
 
 const Sample = () => {
-  return (
+    redirectIfNotLoggedIn();
+    return (
     <div>Sample</div>
-  )
+    )
 }
 
 export default Sample
