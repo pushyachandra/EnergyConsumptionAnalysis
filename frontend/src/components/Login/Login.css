@@ -1,10 +1,8 @@
-.container{
+.container-login{
     text-align: center;
-    /* top:40%;
-    left:50%; */
     position: fixed;
     width: 500px;
-    height: 350px;
+    height: 250px;
     background-color: blueviolet;
     border-radius: 15px;
 }
