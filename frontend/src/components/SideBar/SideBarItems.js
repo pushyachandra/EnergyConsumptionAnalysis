@@ -7,15 +7,15 @@ const SideBarItems = () => {
     }
 
     const goToAnalysis = () => {
-        window.location.href='/home'
+        window.location.href='/analysis'
     }
 
     const goToChatbot = () => {
-        window.location.href='/home'
+        window.location.href='/chatbot'
     }
 
     const goToProfile = () => {
-        window.location.href='/home'
+        window.location.href='/profile'
     }
 
     return (

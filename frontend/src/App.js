@@ -8,6 +8,10 @@ import SideBar from './components/SideBar/SideBar';
 import Sample from './components/Sample/Sample';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
+import Home from './components/Home/Home';
+import Analysis from './components/Analysis/Analysis';
+import Chatbot from './components/Chatbot/Chatbot';
+import Profile from './components/Profile/Profile';
 
 function App() {
     return (
@@ -20,9 +24,13 @@ function App() {
         </div>
         <div className="content">
             <Routes>
-                <Route path="/sample" element={ <Sample/> } />
+                <Route path="/" element={ <Sample/> } />
                 <Route path="/login" element={ <Login/> } />
                 <Route path="/signup" element={ <SignUp/> } />
+                <Route path="/home" element={<Home />} />
+                <Route path="/analysis" element={<Analysis />} />
+                <Route path="/chatbot" element={<Chatbot />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </div>
     </BrowserRouter>

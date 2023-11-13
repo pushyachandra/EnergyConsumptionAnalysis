@@ -10,7 +10,7 @@ const Logout = () => {
 
     return (
         <div>
-            Logged In as:{localStorage.getItem('loggedEmail')}
+            Logged In as : {localStorage.getItem('loggedEmail')}
             <button className='login-comp' onClick={logoutOpr}>Log Out</button>
         </div>
     )
