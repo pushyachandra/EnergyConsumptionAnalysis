@@ -30,7 +30,7 @@ const Login = () => {
                     console.log("Success")
                     localStorage.setItem("loggedIn","true");
                     localStorage.setItem("loggedEmail",email)
-                    window.location.href='/sample';
+                    window.location.href='/';
                 }
                 else if(response.data==="no"){
                     alert("Email and/or Password does not match");
