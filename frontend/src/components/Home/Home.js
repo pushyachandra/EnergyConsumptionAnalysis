@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Home.css'
 import axios from 'axios';
-import uploadIcon from '/Users/ananya/Desktop/280_proj/EnergyConsumptionAnalysis/frontend/src/components/Home/process-icon.png'; // Path to your upload icon png
-import processIcon from '/Users/ananya/Desktop/280_proj/EnergyConsumptionAnalysis/frontend/src/components/Home/uplaod-icon.png'; // Path to your process icon png
-import chooseFile from '/Users/ananya/Desktop/280_proj/EnergyConsumptionAnalysis/frontend/src/components/Home/choose-file.png'
+import uploadIcon from './process-icon.png'; // Path to your upload icon png
+import processIcon from './uplaod-icon.png'; // Path to your process icon png
+import chooseFile from './choose-file.png';
 
 const Home = () => {
     const [selectedFile, setSelectedFile] = useState(null);
