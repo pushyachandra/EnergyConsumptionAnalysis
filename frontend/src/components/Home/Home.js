@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './Home.css'
 import axios from 'axios';
+import uploadIcon from '/Users/ananya/Desktop/280_proj/EnergyConsumptionAnalysis/frontend/src/components/Home/process-icon.png'; // Path to your upload icon png
+import processIcon from '/Users/ananya/Desktop/280_proj/EnergyConsumptionAnalysis/frontend/src/components/Home/uplaod-icon.png'; // Path to your process icon png
+import chooseFile from '/Users/ananya/Desktop/280_proj/EnergyConsumptionAnalysis/frontend/src/components/Home/choose-file.png'
 
 const Home = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -46,25 +49,55 @@ const Home = () => {
         }
     }
 
-    return (
-        <div className='container-analysis'>
-            <div className='tp'>Total Bill</div>
-            <div className='tp'>Total Energy Usage</div>
-            <div className='tp'>Insights</div>
-            <div className='bp'>
-                Files Section
-                <div>
-                    Upload File
-                    <input type="file" onChange={handleFileSelect} />
-                    <button onClick={handleUpload}>Upload File</button>
+//     return (
+//         <div className='container-analysis'>
+//             <div className='tp'>Total Bill</div>
+//             <div className='tp'>Total Energy Usage</div>
+//             <div className='tp'>Insights</div>
+//             <div className='bp'>
+//                 Files Section
+//                 <div>
+//                     Upload File
+//                     <input type="file" onChange={handleFileSelect} />
+//                     <button onClick={handleUpload}>Upload File</button>
+//                 </div>
+//                 <div>
+//                     <h6>Process</h6>
+//                     <button onClick={handleProcessFiles}>Process Files</button>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default Home;
+
+return (
+    <div className='home-container'>
+            <div className='stats-container'>
+                <div className='stat-card'>Total Bill</div>
+                <div className='stat-card'>Total Energy Usage</div>
+                <div className='stat-card'>Insights</div>
+            </div>
+            <div className='files-section'>
+                <div className='upload-section'>
+                <label htmlFor="file-upload" className='upload-label'>
+                        <img src={processIcon} alt="Choose File" className="button-icon" />
+                        Choose File
+                    </label>
+                    <input id="file-upload" type="file" onChange={handleFileSelect} />
+                    <button onClick={handleUpload} className='upload-button'>
+                        <img src={chooseFile} alt="Upload" className="button-icon" />
+                        Upload File
+                    </button>
                 </div>
-                <div>
-                    <h6>Process</h6>
-                    <button onClick={handleProcessFiles}>Process Files</button>
+                <div className='process-section'>
+                    <button onClick={handleProcessFiles} className='process-button'>
+                        <img src={uploadIcon} alt="Process" className="button-icon" />
+                        Process Files
+                    </button>
                 </div>
             </div>
-        </div>
-    );
+        </div> );
 }
-
 export default Home;

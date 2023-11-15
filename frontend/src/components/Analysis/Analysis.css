@@ -1,50 +1,157 @@
-.container-analysis{
-    background-color: red;
-    padding:10px;
-    margin:10px;
-    height:calc(100% - 40px);
-    width:calc(100% - 40px);
-    position:relative;
-    border-radius: 15px;
+:root {
+    --background-main: #f0f2f5; /* Main background color */
+    --color-primary: #4CAF50; /* Primary color for buttons and highlights */
+    --color-secondary: #ffa726; /* Secondary color for accents */
+    --color-tertiary: #2196f3; /* Tertiary color for additional accents */
+    --color-card-bg: #ffffff; /* Background color for cards/graph containers */
+    --color-text-main: #333333; /* Main text color */
+    --color-text-secondary: #ffffff; /* Secondary text color (for buttons) */
+    --border-radius: 10px; /* Border radius for card-like elements */
+}
+
+.container-analysis {
+    background-color: var(--background-main);
+    padding: 20px;
+    margin: 10px;
+    height: calc(100vh - 20px); /* Full height adjusted for padding and margin */
+    width: calc(100% - 20px); /* Full width adjusted for padding and margin */
+    position: relative;
+    border-radius: var(--border-radius);
     overflow-y: auto;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
 }
 
-.filter{
-    float: left;
-    margin:15px;
-    padding:15px;
-    height:calc(30% - 60px);
-    width:calc(100% - 60px);
-    background-color: grey;
-    border-radius: 15px;
+.charts-container {
+    display: flex; /* Use flexbox to lay out children side by side */
+    justify-content: space-around; /* Space out the children evenly */
+    flex-wrap: wrap; /* Allow the items to wrap as needed */
 }
 
-.tp{
-    float: left;
-    margin:15px;
-    padding:15px;
-    height:calc(50% - 60px);
-    width:calc(33.33% - 60px);
-    background-color: grey;
-    border-radius: 15px;
+.chart-container {
+    max-width: 300px; /* Set a max-width for your chart container */
+    margin: 0 auto; /* This will center the chart in the middle of the page */
+        flex: 1; /* Each chart container will grow equally */
+        /* max-width: calc(50% - 20px); Max width set to 50% of the parent container width minus any desired margins */
+        margin: 10px; /* Provide some space between the charts */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle shadow for depth */
+
 }
 
-.bp-1{
-    float: left;
-    margin:15px;
-    padding:15px;
-    height:calc(50% - 60px);
-    width:calc(100% - 60px);
-    background-color: grey;
-    border-radius: 15px;
+.chart-container.scatter {
+    max-width: calc(73% - 20px); /* Adjust the width as necessary */
+    background-color: var(--color-card-bg);
+    margin: 10px 0; /* Margin top and bottom */
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-.bp-2{
-    float: left;
-    margin:15px;
-    padding:15px;
-    height:calc(100% - 60px);
-    width:calc(100% - 60px);
-    background-color: grey;
-    border-radius: 15px;
+.filter {
+    display: flex;
+    justify-content: space-around; /* Evenly space out the date pickers */
+    margin-bottom: 20px; /* Add some space below the filter area */
+    padding: 10px;
+    background-color: var(--color-card-bg);
+    border-radius: var(--border-radius);
 }
+
+.tp, .bp-1, .bp-2 {
+    background-color: var(--color-card-bg);
+    margin: 10px 0; /* Margin top and bottom */
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.tp {
+    /* Adjust the height to better fit the content */
+    height: auto; /* Height is automatically determined by the content */
+}
+
+ /* .tp button {
+    background-color: var(--color-primary);
+    color: var(--color-text-secondary);
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-right: 10px; 
+    font-weight: bold;
+}  */
+
+
+
+/* .tp button:hover {
+    background-color: darken(var(--color-primary), 10%);
+} */
+
+.analysis-button {
+    background-color: var(--color-primary); /* Use the primary color for buttons */
+    color: var(--color-text-secondary); /* White text color for better contrast */
+    padding: 8px 16px; /* Uniform padding */
+    border: none; /* No border */
+    border-radius: var(--border-radius); /* Rounded corners */
+    cursor: pointer; /* Cursor indicates button */
+    outline: none; /* Remove outline */
+    transition: background-color 0.2s; /* Smooth background color transition */
+}
+
+/* Hover state for the buttons */
+.analysis-button:hover {
+    background-color: #19802c ; /* Darken the button color */
+    color: var(--color-text-secondary); /* Keep the text color unchanged */
+}
+
+/* Adjusting the layout for the charts */
+.bp-1, .bp-2 {
+    height: auto; /* Height is automatically determined by the content */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+}
+
+/* Style the datepicker container */
+.react-datepicker-wrapper {
+    display: block; /* Override default inline display */
+    width: 100%; /* Full width */
+    margin-bottom: 1rem; /* Space below the datepicker */
+}
+
+/* Style the input field itself */
+.react-datepicker__input-container input {
+    width: 100%; /* Full width */
+    padding: 10px 15px; /* Padding for a larger click area and visual appeal */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: var(--border-radius); /* Use the border-radius defined in :root */
+    font-size: 1rem; /* Larger font size for better readability */
+    line-height: 1.5; /* Line height for better readability */
+    color: var(--color-text-main); /* Use the text color defined in :root */
+    background-color: var(--color-card-bg); /* Background color for the input */
+}
+
+/* Style the datepicker itself */
+.react-datepicker {
+    border: none; /* Remove default border */
+    border-radius: var(--border-radius); /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+/* Style the header */
+.react-datepicker__header {
+    background-color: var(--primary-color); /* Primary color for the header */
+    border-bottom: none; /* Remove default border */
+}
+
+/* Style the selected day */
+.react-datepicker__day--selected {
+    background-color: var(--accent-color); /* Highlight color for selected day */
+}
+
+/* Style the day:hover */
+.react-datepicker__day:hover {
+    background-color: var(--primary-color); /* Highlight color when hovering over days */
+}
+
+/* ... additional styles ... */
+
+/* You may need to adjust the sizes of the charts within their components' options for the best fit */

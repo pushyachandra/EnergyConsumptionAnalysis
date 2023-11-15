@@ -53,7 +53,7 @@ const Analysis = () => {
 
     const fetchHeatMapData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/heatmap-data?type=${heatMapType}&start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
+            const response = await axios.get(`http://localhost:8080/api/heatmap-data?type=${heatMapType}&start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
             const transformedData = transformHeatMapData(response.data);
             setHeatMapData(transformedData.data);
             setXLabels(transformedData.xLabels);
@@ -98,7 +98,7 @@ const Analysis = () => {
 
     const fetchScatterData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/scatter-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
+            const response = await axios.get(`http://localhost:8080/api/scatter-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
             // console.log ("Scatter Data from backend:", response.data); // Log backend data
             setScatterData(transformScatterData(response.data));
         } catch (error) {
@@ -156,7 +156,7 @@ const Analysis = () => {
 
     const fetchBarData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
+            const response = await axios.get(`http://localhost:8080/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
             setBarData(response.data);
         } catch (error) {
             console.error('Error fetching bar chart data:', error);
@@ -204,7 +204,7 @@ const Analysis = () => {
 
     const fetchAvailableDates = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/available-dates');
+            const response = await axios.get('http://localhost:8080/api/available-dates');
             const dates = response.data.map(dateStr => new Date(dateStr));
             setAvailableDates(dates);
     
@@ -223,7 +223,7 @@ const Analysis = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
+            const response = await axios.get(`http://localhost:8080/api/data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
                 const data = response.data;
                 // console.log(data);
                 setPieData({
@@ -275,15 +275,16 @@ const Analysis = () => {
                     includeDates={availableDates}
                 />
             </div>
-            <div className='tp'>
+            <div className="charts-container">
+            <div className='tp chart-container'>
                 <div>
-                    <button onClick={() => setDataType('cost')}>Show Cost</button>
-                    <button onClick={() => setDataType('usage')}>Show Usage</button>
+                    <button className='analysis-button' onClick={() => setDataType('cost')}>Show Cost</button>
+                    <button className='analysis-button' onClick={() => setDataType('usage')}>Show Usage</button>
                 </div>
-                Pie Chart
+                <h2>Pie Chart</h2>
                 {pieData && <Pie data={pieData} />}
             </div>
-            <div className='tp'>
+            <div className='chart-container scatter'>
                 {/* Scatter Plot */}
                 {scatterData && scatterData.datasets && scatterData.datasets.length > 0 ? (
                     <Scatter data={scatterData} options={{
@@ -296,10 +297,11 @@ const Analysis = () => {
                     <p>Loading scatter plot data...</p>
                 )}
             </div>
+            </div>
             <div className='tp'>
                 <div>
-                    <button onClick={() => setHeatMapType('usage')}>Show Usage</button>
-                    <button onClick={() => setHeatMapType('cost')}>Show Cost</button>
+                    <button className='analysis-button' onClick={() => setHeatMapType('usage')}>Show Usage</button>
+                    <button className='analysis-button' onClick={() => setHeatMapType('cost')}>Show Cost</button>
                 </div>
                 <HeatMap
                     xLabels={xLabels}
@@ -310,8 +312,8 @@ const Analysis = () => {
             </div>
             <div className='bp-1'>
                 <div>
-                    <button onClick={() => setBarDataType('cost')}>Show Cost</button>
-                    <button onClick={() => setBarDataType('usage')}>Show Usage</button>
+                    <button className='analysis-button' onClick={() => setBarDataType('cost')}>Show Cost</button>
+                    <button className='analysis-button' onClick={() => setBarDataType('usage')}>Show Usage</button>
                 </div>
                 Stacked Bar Chart
                 <Bar data={generateBarChartData()} options={{ 

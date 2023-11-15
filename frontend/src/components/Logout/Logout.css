@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.logout-section {
+    background-color: #333; /* Dark background for the logout section */
+    color: white;
+    padding: 30px 20px; /* Adjust padding as needed */
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1500;
+    display: flex;
+    justify-content: space-between; /* Aligns children to the sides */
+    align-items: center; /* Vertically centers children */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: adds depth */
+}
+
+.logout-title {
+    font-size: 1.7em; /* Adjust the font size as needed */
+    flex-grow: 1; /* Allows the title to take up the available space */
+    text-align: center; /* Ensures title is centered */
+    font-family: 'Roboto', sans-serif; /* Your chosen Google Font */
+    margin-left: 200px;
+}
+
+.logout-container {
+    display: flex;
+    align-items: center;
+}
+
+.logout-container span {
+    margin-right: 10px; /* Adds some space before the logout button */
+    font-size: 1em; /* Adjust the font size as needed */
+}
+
+.logout-container button {
+    padding: 5px 15px; /* Reduced padding for a smaller button */
+    background-color: #f44336; /* Red color for logout button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.8em; /* Smaller font size for the button text */
+    text-transform: uppercase; /* Optional: capitalizes button text */
+}
+
+.logout-container button:hover {
+    background-color: #c62828; /* Darker shade on hover */
+}
+
+/* Assuming you have a sidebar that may overlap */
+.sidebar {
+    z-index: 1000; /* Ensure this is less than logout-section's z-index */
+}
+
