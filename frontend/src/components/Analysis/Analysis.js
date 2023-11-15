@@ -3,7 +3,6 @@ import { Pie } from 'react-chartjs-2';
 import axios from 'axios';
 import './Analysis.css'
 import { redirectIfNotLoggedIn } from '../Auth'
-// import { Chart as ChartJS, , Tooltip, Legend } from 'chart.js';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Bar } from 'react-chartjs-2';
@@ -53,7 +52,7 @@ const Analysis = () => {
 
     const fetchHeatMapData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/heatmap-data?type=${heatMapType}&start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/heatmap-data?type=${heatMapType}&start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
             const transformedData = transformHeatMapData(response.data);
             setHeatMapData(transformedData.data);
             setXLabels(transformedData.xLabels);
@@ -98,7 +97,7 @@ const Analysis = () => {
 
     const fetchScatterData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/scatter-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/scatter-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
             // console.log ("Scatter Data from backend:", response.data); // Log backend data
             setScatterData(transformScatterData(response.data));
         } catch (error) {
@@ -156,7 +155,7 @@ const Analysis = () => {
 
     const fetchBarData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
             setBarData(response.data);
         } catch (error) {
             console.error('Error fetching bar chart data:', error);
@@ -204,7 +203,7 @@ const Analysis = () => {
 
     const fetchAvailableDates = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/available-dates');
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+'/api/available-dates');
             const dates = response.data.map(dateStr => new Date(dateStr));
             setAvailableDates(dates);
     
@@ -223,7 +222,7 @@ const Analysis = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
                 const data = response.data;
                 // console.log(data);
                 setPieData({
