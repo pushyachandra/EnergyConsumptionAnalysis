@@ -1,0 +1,47 @@
+/* Sidebar Styles */
+.sidebar {
+    background-color: #333; /* Dark background for the sidebar */
+    color: white;
+    min-height: 100vh; /* Full height */
+    width: 200px; /* Sidebar width */
+    position: fixed; /* Fixed position */
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+.sidebar-container {
+    padding-top: 120px; /* Adjust this value based on the height of your logout section */
+}
+.sidebar button {
+    background-color: #4CAF50; /* Green background for buttons */
+    color: white;
+    padding: 10px 15px;
+    margin-bottom: 8px; /* Space between buttons */
+    width: 100%; /* Full width */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-align: left;
+}
+
+.sidebar button:hover {
+    background-color: #367C2B; /* Darker shade of green for hover effect */
+    transform: translateX(5px); /* Slight right movement for hover effect */
+}
+
+.sidebar button:focus {
+    outline: none; /* Removes the default focus outline */
+}
+
+.sidebar-message {
+    font-size: 20px; /* Large font size */
+    font-weight: bold;
+    text-align: center; /* Center text */
+    word-break: break-word; /* Ensure words do not split at the end of the line */
+    padding: 0px; /* Padding around the text */
+    color: #FFF; /* White text color, change as needed */
+    margin-top: 100px; /* Add some space from the top */
+    line-height: 3; /* Adjust line height for better readability */
+}

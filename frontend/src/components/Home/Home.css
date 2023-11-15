@@ -1,4 +1,4 @@
-.container-analysis{
+/* .container-analysis{
     background-color: red;
     padding:10px;
     margin:10px;
@@ -26,4 +26,134 @@
     width:calc(100% - 60px);
     background-color: grey;
     border-radius: 15px;
+} */
+
+
+:root {
+    --background-color: #f5f5f5;
+    --card-color: #ffffff;
+    --primary-color: #4caf50;
+    --accent-color: #ffa726;
+    --button-color: #2196f3;
+    --border-radius: 10px;
 }
+
+.home-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100vh;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-card {
+    flex: 1;
+    background-color: var(--card-color);
+    margin-right: 10px;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.stat-card:last-child {
+    margin-right: 0;
+}
+
+.files-section {
+    background-color: var(--card-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.upload-section,
+.process-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align to the left */
+    gap: 10px; /* Adds space between the label and button */
+    margin-bottom: 20px;
+}
+
+.upload-label,
+.upload-button,
+.process-button {
+    padding: 8px 16px; /* Smaller padding for a more compact look */
+    font-size: 0.9rem; /* Smaller font size for a more refined look */
+    border-radius: 4px; /* Less rounded corners for a professional appearance */
+    border: 1px solid transparent; /* Add border for depth, use a color that fits your design */
+    transition: all 0.3s ease; /* Smooth transition for interactions */
+    width: 200px;
+}
+
+.upload-label {
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    width: 100px;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-color: #b87a24;
+
+}
+
+.upload-button,
+.process-button {
+    background-color: var(--accent-color);
+    color: rgb(1, 1, 1);
+    border-color: var(--primary-color); /* Slight border for definition */
+    cursor: pointer;
+    text-transform: none; /* Normal casing for a more professional look */
+    font:  weight/* Normal font weight */
+}
+
+.upload-button:hover,
+.process-button:hover {
+    background-color: #b87a24;
+    color: rgb(247, 247, 247);
+    border-color: darken(var(--primary-color), 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds subtle shadow on hover */
+}
+.upload-label:hover {
+    background-color: #316333;
+    border-color: darken(var(--primary-color), 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds subtle shadow on hover */
+}
+
+
+.upload-button:active,
+.process-button:active {
+    transform: scale(0.98); /* Slight shrink effect to simulate button press */
+}
+
+/* Icon styles */
+.button-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+    cursor: pointer; 
+    font-weight: 100px;
+}
+
+
+#file-upload {
+    display: none;
+}
+
+
