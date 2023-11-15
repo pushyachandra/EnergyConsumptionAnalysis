@@ -1,0 +1,50 @@
+.container-analysis{
+    background-color: red;
+    padding:10px;
+    margin:10px;
+    height:calc(100% - 40px);
+    width:calc(100% - 40px);
+    position:relative;
+    border-radius: 15px;
+    overflow-y: auto;
+}
+
+.filter{
+    float: left;
+    margin:15px;
+    padding:15px;
+    height:calc(30% - 60px);
+    width:calc(100% - 60px);
+    background-color: grey;
+    border-radius: 15px;
+}
+
+.tp{
+    float: left;
+    margin:15px;
+    padding:15px;
+    height:calc(50% - 60px);
+    width:calc(33.33% - 60px);
+    background-color: grey;
+    border-radius: 15px;
+}
+
+.bp-1{
+    float: left;
+    margin:15px;
+    padding:15px;
+    height:calc(50% - 60px);
+    width:calc(100% - 60px);
+    background-color: grey;
+    border-radius: 15px;
+}
+
+.bp-2{
+    float: left;
+    margin:15px;
+    padding:15px;
+    height:calc(100% - 60px);
+    width:calc(100% - 60px);
+    background-color: grey;
+    border-radius: 15px;
+}
