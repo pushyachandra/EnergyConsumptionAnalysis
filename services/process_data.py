@@ -69,9 +69,9 @@ def parse_csv(file_path):
         next(reader, None)
 
         for row in reader:
-            print(row)
+            # print(row)
             if row.get('TYPE') == 'Electric usage':
-                print("here")
+                # print("here")
                 date_str = row.get('DATE')
                 start_time_str = row.get('START TIME')
                 end_time_str = row.get('END TIME')
@@ -82,16 +82,16 @@ def parse_csv(file_path):
                 start_time = datetime.strptime(start_time_str, '%H:%M').time()
                 end_time = datetime.strptime(end_time_str, '%H:%M').time()
                 relevant_data.append((date, start_time, end_time, usage, cost))
-    print(len(relevant_data))
+    # print(len(relevant_data))
     return relevant_data
 
 def main():
-    print("here")
-    print(args)
+    # print("here")
+    # print(args)
     # Replace these with your actual values
     gcs_bucket_name = os.getenv('GOOGLE_BUCKET_NAME')
     gcs_file_name = str(args.file)
-    print("this one",gcs_file_name)
+    # print("this one",gcs_file_name)
 
     # Download file from Google Cloud Storage
     local_file_path = download_from_gcs(gcs_bucket_name, gcs_file_name)

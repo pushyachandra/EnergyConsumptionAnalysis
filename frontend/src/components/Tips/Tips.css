@@ -61,3 +61,18 @@
 .pagination-info {
     margin-top: 10px;
 }
+
+.tips-main-title{
+    text-align: center;
+    font-size: 30px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tips-main-cont{
+    margin-top:100px;
+}

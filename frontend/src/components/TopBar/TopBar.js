@@ -20,6 +20,9 @@ const TopBar = () => {
     return (
     <div className='top-bar-main'>
         <img src={logo} alt="Logo" className="logo" onClick={goToHome} /> {/* Logo added here */}
+        <div className='web-page-title'>
+            Energy Consumption Analysis
+        </div>
         {
             isLogin() ?
                 <div className='logout-box'>

@@ -44,7 +44,7 @@ const Home = () => {
 
     const fetchAvailableDates = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/available-dates`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/available-dates?email=${localStorage.getItem('loggedEmail')}`);
             const dates = response.data.map(dateStr => new Date(dateStr));
             if (dates.length > 0) {
                 // Find the earliest and latest dates
@@ -68,7 +68,8 @@ const Home = () => {
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/getCostUsage`, {
                     params: {
                         start: formattedStart,
-                        end: formattedEnd
+                        end: formattedEnd,
+                        email: localStorage.getItem('loggedEmail')
                     }
                 });
                 const data = response.data[0] || {}; // Fallback to an empty object if data[0] is null/undefined
@@ -91,10 +92,17 @@ const Home = () => {
     const handleProcessFiles = async () => {
         try {
             const email = localStorage.getItem('loggedEmail');
-            const file_name = 'newone.csv';
-            const response = await axios.post(process.env.REACT_APP_BACKEND_URI + '/api/process-files', { email,file_name });
-            console.log(response.data);
-            alert('Files processed successfully');
+            console.log(email)
+            const res_name = await axios.get(process.env.REACT_APP_BACKEND_URI + `/api/getFileName?email=${email}`);
+            if(res_name.data.length === 0){
+                alert("No Files to process")
+            }
+            else{
+                const file_name = res_name.data[0].file_name;
+                const response = await axios.post(process.env.REACT_APP_BACKEND_URI + '/api/process-files', { email,file_name });
+                console.log(response.data);
+                alert('Files processed successfully');
+            }
         } catch (error) {
             console.error('Error processing files:', error);
             alert('Error processing files');

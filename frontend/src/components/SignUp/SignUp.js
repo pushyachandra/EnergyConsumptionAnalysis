@@ -52,6 +52,8 @@ const SignUp = () => {
                     setEmail("")
                     setPassword("")
                     setRePassword("")
+                    alert("Sign Up Successful")
+                    window.location.href='/login';
                 }
                 else{
                     alert(response.data)
