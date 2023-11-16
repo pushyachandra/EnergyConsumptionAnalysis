@@ -41,10 +41,33 @@ const Analysis = () => {
     // const [barEndDate, setBarEndDate] = useState(new Date());
     const [scatterData, setScatterData] = useState({});
 
+    const [selectedDataType, setSelectedDataType] = useState('cost');
+
     const [heatMapData, setHeatMapData] = useState([]);
-    const [heatMapType, setHeatMapType] = useState('usage')
+    const [heatMapType, setHeatMapType] = useState('cost')
     const [xLabels, setXLabels] = useState([]); // Dates
     const [yLabels, setYLabels] = useState([]); // Time slots
+
+    const [totalCost, setTotalCost] = useState(0);
+    const [totalUsage, setTotalUsage] = useState(0);
+
+    const [selectedHeatMapType, setSelectedHeatMapType] = useState('cost');
+    const [selectedBarDataType, setSelectedBarDataType] = useState('cost');
+
+    const handleBarDataTypeChange = (type) => {
+        setBarDataType(type);
+        setSelectedBarDataType(type);
+      };
+
+    const handleDataTypeChange = (type) => {
+        setDataType(type);
+        setSelectedDataType(type);
+      };
+
+    const handleHeatMapTypeChange = (type) => {
+        setHeatMapType(type);
+        setSelectedHeatMapType(type);
+    };
 
     useEffect(() => {
         fetchHeatMapData();
@@ -100,7 +123,7 @@ const Analysis = () => {
                 }
             }
         });
-        console.log(heatmapData)
+        // console.log(heatmapData)
         return {
             data: heatmapData,
             xLabels: xLabels,
@@ -217,6 +240,26 @@ const Analysis = () => {
         };
     };
 
+    const fetchTotalCostAndUsage = async () => {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/getCostUsage`, {
+                params: {
+                    start: startDate.toISOString(),
+                    end: endDate.toISOString()
+                }
+            });
+            const data = response.data[0];
+            setTotalCost(Number(data.s_cost).toFixed(2));
+            setTotalUsage(Number(data.s_usage).toFixed(2));
+        } catch (error) {
+            console.error('Error fetching total cost and usage:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchTotalCostAndUsage();
+    }, [startDate, endDate]);
+
     useEffect(() => {
         fetchAvailableDates();
     }, []);
@@ -275,31 +318,75 @@ const Analysis = () => {
 
     return (
         <div className='container-analysis'>
-            <div className='filter'>
-                <DatePicker
-                    selected={startDate}
-                    onChange={date => setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    includeDates={availableDates}
-                />
-                <DatePicker
-                    selected={endDate}
-                    onChange={date => setEndDate(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                    includeDates={availableDates}
-                />
+            <div className='date-picker-container'>
+                <div className='date-picker'>
+                    <label className='date-picker-label'>From</label>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={date => setStartDate(date)}
+                        selectsStart
+                        startDate={startDate}
+                        endDate={endDate}
+                        includeDates={availableDates}
+                    />
+                </div>
+                <div className='date-picker'>
+                    <label className='date-picker-label'>To</label>
+                    <DatePicker
+                        selected={endDate}
+                        onChange={date => setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                        includeDates={availableDates}
+                    />
+                </div>
+                <div className='summary-display'>
+                    <div>
+                        <label className='date-picker-label'>Total Cost</label> USD {totalCost}
+                    </div>
+                </div>
+                <div className='summary-display'>
+                    <div>
+                        <label className='date-picker-label'>Total Usage</label> {totalUsage} units
+                    </div>
+                </div>
+                <div className='time-frames-container'>
+                    <div className='time-frame-box' style={{ backgroundColor: 'rgba(135, 206, 235, 0.6)' }}>
+                        <div className='time-frame-title'>Morning</div>
+                        <div className='time-frame-range'>06:00 to 12:00</div>
+                    </div>
+                    <div className='time-frame-box' style={{ backgroundColor: 'rgba(255, 165, 0, 0.6)' }}>
+                        <div className='time-frame-title'>Noon</div>
+                        <div className='time-frame-range'>12:00 to 16:00</div>
+                    </div>
+                    <div className='time-frame-box' style={{ backgroundColor: 'rgba(255, 69, 0, 0.6)' }}>
+                        <div className='time-frame-title'>Evening</div>
+                        <div className='time-frame-range'>16:00 to 20:00</div>
+                    </div>
+                    <div className='time-frame-box' style={{ backgroundColor: 'rgba(0, 0, 128, 0.6)' }}>
+                        <div className='time-frame-title'>Night</div>
+                        <div className='time-frame-range'>20:00 to 06:00</div>
+                    </div>
+                </div>
             </div>
             <div className="charts-container">
                 <div className='tp chart-container'>
                     <h2 className='sub-title-text'>Pie Chart</h2>
                     <div className='button-container'>
-                        <button className='analysis-button' onClick={() => setDataType('cost')}>Show Cost</button>
-                        <button className='analysis-button' onClick={() => setDataType('usage')}>Show Usage</button>
+                        <button
+                        className={`analysis-button ${selectedDataType === 'cost' ? 'active' : ''}`}
+                        onClick={() => handleDataTypeChange('cost')}
+                        >
+                        Show Cost
+                        </button>
+                        <button
+                        className={`analysis-button ${selectedDataType === 'usage' ? 'active' : ''}`}
+                        onClick={() => handleDataTypeChange('usage')}
+                        >
+                        Show Usage
+                        </button>
                     </div>
                     {pieData && <Pie data={pieData} />}
                 </div>
@@ -320,15 +407,24 @@ const Analysis = () => {
             <div className='tp'>
                 <h2 className='sub-title-text'>Heat Map</h2>
                 <div className='button-container'>
-                    <button className='analysis-button' onClick={() => setHeatMapType('usage')}>Show Usage</button>
-                    <button className='analysis-button' onClick={() => setHeatMapType('cost')}>Show Cost</button>
+                    <button
+                        className={`analysis-button ${selectedHeatMapType === 'cost' ? 'active' : ''}`}
+                        onClick={() => handleHeatMapTypeChange('cost')}
+                    >
+                        Show Cost
+                    </button>
+                    <button
+                        className={`analysis-button ${selectedHeatMapType === 'usage' ? 'active' : ''}`}
+                        onClick={() => handleHeatMapTypeChange('usage')}
+                    >
+                        Show Usage
+                    </button>
                 </div>
                 <HeatMap className='heat-map-container'
                     xLabels={xLabels}
                     yLabels={yLabels}
                     data={heatMapData}
-                    // squares
-                    height={30} // Adjust the height as necessary
+                    height={30}
                     cellStyle={(background, value, min, max, data, x, y) => ({
                         background: `rgba(50, 50, 150, ${1 - (max - value) / (max - min)})`,
                         fontSize: "11px",
@@ -339,16 +435,26 @@ const Analysis = () => {
             <div className='bp-1'>
             <h2 className='sub-title-text'>Stacked Bar Graph</h2>
                 <div className='button-container'>
-                    <button className='analysis-button' onClick={() => setBarDataType('cost')}>Show Cost</button>
-                    <button className='analysis-button' onClick={() => setBarDataType('usage')}>Show Usage</button>
+                <button
+                    className={`analysis-button ${selectedBarDataType === 'cost' ? 'active' : ''}`}
+                    onClick={() => handleBarDataTypeChange('cost')}
+                >
+                    Show Cost
+                </button>
+                <button
+                    className={`analysis-button ${selectedBarDataType === 'usage' ? 'active' : ''}`}
+                    onClick={() => handleBarDataTypeChange('usage')}
+                >
+                    Show Usage
+                </button>
                 </div>
                 <Bar data={generateBarChartData()} options={{ 
                     scales: { x: { stacked: true }, y: { stacked: true } }
                 }} />
             </div>
-            <div className='bp-2'>
+            {/* <div className='bp-2'>
                 Table with individual colum search feature
-            </div>
+            </div> */}
         </div>
     )
 }

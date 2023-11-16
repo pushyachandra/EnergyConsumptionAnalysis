@@ -1,23 +1,34 @@
 .topbar{
-    height: 15vh;
-    background-color: blue;
+    height: 10vh;
+    background-color: rgb(145, 144, 107);
+    background: linear-gradient(to right, #c0cd87, #4f5f3d); /* Example gradient from pink to orange */
+  
+  /* Keep the rest of your styles unchanged */
+    /* padding: 20px; */
+    /* border-radius: 5px; */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    /* width: 40%; */
+    /* margin: auto; */
+    /* margin-top: 40px; */
 }
 
 .sidebar{
     width: 15%;
-    height: 85vh;
+    height: 90vh;
     background-color: purple;
     float: left;
 }
 
 .content{
     /* background-color: aquamarine; */
-    height:85vh;
+    height:90vh;
     float: right;
     width: 85%;
     background-image: url('./background.webp');
     background-size: cover;
     background-position: center;
+    overflow: hidden;
     /* backfilter: blur(8px); */
     /* -webkit-filter: blur(8px); */
 }

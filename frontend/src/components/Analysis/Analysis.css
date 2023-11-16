@@ -113,12 +113,11 @@
 .react-datepicker-wrapper {
     display: block; /* Override default inline display */
     width: 100%; /* Full width */
-    margin-bottom: 1rem; /* Space below the datepicker */
+     /* Space below the datepicker */
 }
 
 /* Style the input field itself */
 .react-datepicker__input-container input {
-    width: 100%; /* Full width */
     padding: 10px 15px; /* Padding for a larger click area and visual appeal */
     border: 1px solid #ddd; /* Subtle border */
     border-radius: var(--border-radius); /* Use the border-radius defined in :root */
@@ -126,6 +125,7 @@
     line-height: 1.5; /* Line height for better readability */
     color: var(--color-text-main); /* Use the text color defined in :root */
     background-color: var(--color-card-bg); /* Background color for the input */
+    max-width:120px;
 }
 
 /* Style the datepicker itself */
@@ -220,4 +220,111 @@
     .heat-map-box .xLabels div {
       font-size: 10px; /* Adjust font size as needed */
     }
+  }
+
+.time-info {
+    background-color: var(--color-card-bg);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem; /* Adjust the font size if needed */
+}
+
+.time-info p {
+    margin: 0;
+    padding-bottom: 5px; /* Add some space below the title */
+    color: var(--color-primary); /* Use the primary color for the title */
+}
+
+.time-frame-box {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: space-between; /* Space out the label and time range */
+    padding: 8px;
+    border-radius: var(--border-radius);
+    background-color: var(--color-primary); /* Replace with appropriate color variable */
+    color: var(--color-text-secondary);
+    margin-right: 10px; /* Space between boxes */
+    align-items: center; /* Center align the content */
+    padding: 10px;
+    margin: 5px;
+    /* border-radius: 5px; */
+}
+
+.time-frame-label {
+    font-weight: bold;
+    text-align: center;
+}
+
+.time-frame-range {
+    text-align: center;
+}
+
+.date-picker-container {
+    margin-bottom: 10px; /* Add space below each date picker container */
+}
+
+.date-picker-container label {
+    display: block; /* Make the label take the full width */
+    margin-bottom: 5px; /* Add some space between label and date picker */
+    color: var(--color-text-main); /* Set the color for the label */
+    font-weight: bold; /* Make the label text bold */
+}
+
+.date-picker-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.date-picker-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.date-picker {
+    flex-grow: 1;
+    margin-right: 10px;
+    background-color: white;
+    padding:20px;
+    border-radius: 15px;
+    max-width: 170px;
+}
+
+.time-frames-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px; /* Space between time frame boxes */
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width:300px;
+}
+
+.summary-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin: 20px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    width:170px;
+}
+
+.summary-display div {
+    margin: 0 10px;
+    padding: 5px 10px;
+}
+
+.analysis-button.active {
+    background-color: #19802c; /* Darker shade for active button */
+    color: #fff; /* Text color for active button */
   }

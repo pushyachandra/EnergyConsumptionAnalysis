@@ -1,12 +1,106 @@
-.container-signup{
+/*.container-login{
     text-align: center;
     position: fixed;
     width: 500px;
-    height: 400px;
-    background-color: yellow;
+    height: 250px;
+    background-color: blueviolet;
     border-radius: 15px;
 }
 
 .login-comp{
     margin: 20px;
+} */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
 }
+
+/* Apply this reset to all elements to avoid unexpected spacing */
+* {
+    box-sizing: border-box;
+}
+
+.lg-login-background {
+    width: 100%;
+    height: 80vh;
+    margin:20px;
+    background-size: cover;
+    background-position: top;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lg-login-container {
+    background: rgba(255, 255, 255, 0.9); 
+    padding: 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.lg-login-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lg-login-title {
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.lg-login-form {
+    width: 100%;
+}
+
+.lg-input-group {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.lg-input-group input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.lg-forgot-password {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #b2992c;
+    color: white;
+    font-weight: bold;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.lg-forgot-password:hover{
+    background-color: #907d29;
+}
+
+.lg-button-log {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.lg-button-log:hover {
+    background-color: #218838;
+} 

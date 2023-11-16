@@ -1,0 +1,66 @@
+.insights-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    /* overflow: hidden; */
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
+h2 {
+    color: #3498db;
+    margin-bottom: 20px;
+}
+
+.select-container {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+select {
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+select:hover {
+    border-color: #3498db;
+}
+
+select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.daily-usage-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.daily-usage-table th, 
+.daily-usage-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.daily-usage-table th {
+    background-color: #3498db;
+    color: white;
+}
+
+.daily-usage-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

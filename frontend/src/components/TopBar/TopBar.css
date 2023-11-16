@@ -1,0 +1,9 @@
+.logout-box{
+    min-width: none;
+    max-width: 30%;
+    float:right;
+}
+
+.top-bar-main{
+    align-items: center;
+}

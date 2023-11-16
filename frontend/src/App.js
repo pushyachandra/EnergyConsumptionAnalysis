@@ -11,7 +11,6 @@ import SignUp from './components/SignUp/SignUp';
 import Home from './components/Home/Home';
 import Analysis from './components/Analysis/Analysis';
 import Chatbot from './components/Chatbot/Chatbot';
-import Profile from './components/Profile/Profile';
 import Insights from './components/Insights/Insights';
 
 function App() {
@@ -26,14 +25,13 @@ function App() {
         </div>
         <div className="content">
             <Routes>
-                <Route path="/" element={ <Sample/> } />
+                {/* <Route path="/" element={ <Sample/> } /> */}
                 <Route path="/login" element={ <Login/> } />
                 <Route path="/signup" element={ <SignUp/> } />
                 <Route path="/home" element={<Home />} />
                 <Route path="/analysis" element={<Analysis />} />
                 <Route path="/chatbot" element={<Chatbot />} />
                 <Route path="/insights" element={<Insights />} />
-                <Route path="/profile" element={<Profile />} />
             </Routes>
         </div>
     </BrowserRouter>
