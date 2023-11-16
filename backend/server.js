@@ -496,31 +496,6 @@ const getDataSummary = async (email) => {
     });
 };
 
-// const openAiSummary = async (msg, summaryData) => {
-//     let contextMessage = { role: "system", content: "From the previouly entered information answer the questions asked by the user" };
-//     let userMessage = { role: "user", content: msg };
-    
-//     try {
-//         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-//             model : 'gpt-3.5-turbo',
-//             max_tokens: 150,
-//             temperature: 0.5,
-//             messages: [contextMessage, userMessage],
-//         }, {
-//             headers: {
-//                 'Authorization': `Bearer ${process.env.API_KEY}`
-//             }
-//         });
-//         console.log(response.data.choices[0].message.content)
-//         return response.data.choices[0].message.content;
-//     } catch (error) {
-//         if (error.response) {
-//             console.error('OpenAI API responded with:', error.response.status, error.response.data);
-//         }
-//         throw error;
-//     }
-// };
-
 let conversationHistory = [];
 
 const detectIntent = async (msg) => {
