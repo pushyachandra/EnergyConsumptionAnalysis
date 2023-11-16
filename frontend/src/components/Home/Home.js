@@ -44,7 +44,7 @@ const Home = () => {
 
     const fetchAvailableDates = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/available-dates`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/available-dates?email=${localStorage.getItem('loggedEmail')}`);
             const dates = response.data.map(dateStr => new Date(dateStr));
             if (dates.length > 0) {
                 // Find the earliest and latest dates
@@ -68,7 +68,8 @@ const Home = () => {
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/getCostUsage`, {
                     params: {
                         start: formattedStart,
-                        end: formattedEnd
+                        end: formattedEnd,
+                        email: localStorage.getItem('loggedEmail')
                     }
                 });
                 const data = response.data[0] || {}; // Fallback to an empty object if data[0] is null/undefined

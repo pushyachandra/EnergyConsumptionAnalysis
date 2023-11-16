@@ -13,7 +13,7 @@ const Tips = () => {
 
     const fetchTip = async (page) => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/tips`, { params: { page } });
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/tips`, { params: { page } });
             // console.log('Response data:', response.data); // Check the data structure
             if (response.data && response.data.tips.length > 0) {
                 setCurrentTip(response.data.tips[0]); // Set the current tip

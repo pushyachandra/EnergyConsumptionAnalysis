@@ -134,7 +134,7 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 });
 
 app.get('/api/data', (req, res) => {
-    const { start, end, type } = req.query;
+    const { start, end, type, email } = req.query;
 
     // Convert UTC dates to Pacific Time and format to date-only strings
     const localStart = moment(start).tz('America/Los_Angeles').format('YYYY-MM-DD');
@@ -143,7 +143,7 @@ app.get('/api/data', (req, res) => {
     // console.log(`Querying from ${localStart} to ${localEnd}`);
 
     let selectField = type === 'usage' ? 'units' : 'cost';
-    const query = `SELECT date,start_time, ${selectField} AS value FROM upload_testing WHERE date >= ? AND date <= ?`;
+    const query = `SELECT date,start_time, ${selectField} AS value FROM upload_testing WHERE date >= ? AND date <= ? and email='${email}'`;
 
     db.query(query, [localStart, localEnd], (error, results) => {
         if (error) {
@@ -177,8 +177,9 @@ app.get('/api/data', (req, res) => {
 });
 
 app.get('/api/available-dates', (req, res) => {
-    const query = 'SELECT DISTINCT date FROM upload_testing';
-    db.query(query, (error, results) => {
+    let {email} = req.query;
+    const query = 'SELECT DISTINCT date FROM upload_testing where email=?';
+    db.query(query,[email], (error, results) => {
         if (error) {
             return res.status(500).send('Error fetching available dates');
         }
@@ -188,13 +189,13 @@ app.get('/api/available-dates', (req, res) => {
 });
 
 app.get('/api/bar-data', (req, res) => {
-    const { start, end, type } = req.query;
+    const { start, end, type, email} = req.query;
     let selectField = type === 'usage' ? 'units' : 'cost';
 
     const localStart = moment(start).tz('America/Los_Angeles').format('YYYY-MM-DD');
     const localEnd = moment(end).tz('America/Los_Angeles').format('YYYY-MM-DD');
 
-    const query = `SELECT date, start_time, ${selectField} AS value FROM upload_testing  WHERE date >= ? AND date <= ?`;
+    const query = `SELECT date, start_time, ${selectField} AS value FROM upload_testing  WHERE date >= ? AND date <= ? and email='${email}'`;
 
     db.query(query, [localStart, localEnd], (error, results) => {
         if (error) {
@@ -227,12 +228,12 @@ app.get('/api/bar-data', (req, res) => {
 });
 
 app.get('/api/scatter-data', (req, res) => {
-    const { start, end } = req.query;
+    const { start, end, email } = req.query;
 
     const startDate = new Date(start).toISOString().split('T')[0];
     const endDate = new Date(end).toISOString().split('T')[0];
 
-    const query = `SELECT date, units, cost, start_time FROM upload_testing WHERE date >= ? AND date <= ?`;
+    const query = `SELECT date, units, cost, start_time FROM upload_testing WHERE date >= ? AND date <= ? and email='${email}'`;
 
     db.query(query, [startDate, endDate], (error, results) => {
         if (error) {
@@ -267,7 +268,7 @@ app.get('/api/scatter-data', (req, res) => {
 });
 
 app.get('/api/heatmap-data', (req, res) => {
-    const { type, start, end } = req.query; // 'type' is 'units' or 'cost'
+    const { type, start, end, email } = req.query; // 'type' is 'units' or 'cost'
     let selectField = type === 'usage' ? 'units' : 'cost';
     const startDate = new Date(start).toISOString().split('T')[0];
     const endDate = new Date(end).toISOString().split('T')[0];
@@ -280,7 +281,7 @@ app.get('/api/heatmap-data', (req, res) => {
             HOUR(start_time) as hour, 
             SUM(${selectField}) as value 
         FROM upload_testing 
-        WHERE date >= ? AND date <= ?
+        WHERE date >= ? AND date <= ? and email='${email}'
         GROUP BY date, hour
     `;
 
@@ -298,13 +299,14 @@ app.get('/api/heatmap-data', (req, res) => {
 
 app.post('/chat', async (req, res) => {
     const userMessage = req.body.message;
+    const email = req.body.email;
     const intent = await detectIntent(userMessage);
 
     if (intent === 'ROUTE') {
         return res.json({ message: 'ROUTE' });
     } else if (intent === 'DATA') {
         try {
-            const summaryData = await getDataSummary();
+            const summaryData = await getDataSummary(email);
             const openAiResponse = await openAiSummary(userMessage, summaryData);
             res.json({ message: openAiResponse });
         } catch (error) {
@@ -314,8 +316,8 @@ app.post('/chat', async (req, res) => {
     } else if (intent.toLowerCase().includes('download')) {
         const { start, end } = extractDates(intent);
         if (start && end) {
-            const downloadLink = `/download-data?startDate=${start}&endDate=${end}`;
-            return res.json({ message: 'DOWNLOAD', startDate:start, endDate:end });
+            const downloadLink = `/download-data?startDate=${start}&endDate=${end}&email=${email}`;
+            return res.json({ message: 'DOWNLOAD', startDate:start, endDate:end, email:email });
         } else {
             return res.json({ message: "I couldn't find the dates you mentioned. Could you please provide the start and end dates for the download?" });
         }
@@ -325,11 +327,11 @@ app.post('/chat', async (req, res) => {
 });
 
 app.get('/download-data', (req, res) => {
-    const { startDate, endDate } = req.query;
+    const { startDate, endDate, email } = req.query;
     
-    const query = 'SELECT DATE_FORMAT(date, "%Y-%m-%d") AS date, start_time, end_time, units, cost FROM upload_testing WHERE date BETWEEN ? AND ?';
+    const query = 'SELECT DATE_FORMAT(date, "%Y-%m-%d") AS date, start_time, end_time, units, cost FROM upload_testing WHERE date BETWEEN ? AND ? and email=?';
     
-    db.query(query, [startDate, endDate], (error, results) => {
+    db.query(query, [startDate, endDate, email], (error, results) => {
       if (error) {
         console.error('Database query error:', error);
         return res.status(500).send('Error fetching data');
@@ -387,11 +389,11 @@ const convertToDate = (dateString) => {
     return null;
 };
 
-const downloadData = (startDate, endDate) => {
+const downloadData = (startDate, endDate, email) => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT date, start_time, end_time, units, cost FROM upload_testing WHERE date BETWEEN ? AND ?';
+        const query = 'SELECT date, start_time, end_time, units, cost FROM upload_testing WHERE date BETWEEN ? AND ? and email= ?';
         
-        db.query(query, [startDate, endDate], (error, results) => {
+        db.query(query, [startDate, endDate, email], (error, results) => {
             if (error) {
                 return reject(error);
             }
@@ -432,11 +434,11 @@ module.exports = {
     downloadData,
 };
 
-const getDataSummary = async () => {
+const getDataSummary = async (email) => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT date, SUM(units) AS total_units, SUM(cost) AS total_cost FROM upload_testing GROUP BY date';
+        const query = 'SELECT date, SUM(units) AS total_units, SUM(cost) AS total_cost FROM upload_testing where email=? GROUP BY date';
         
-        db.query(query, (error, results) => {
+        db.query(query,[email] ,(error, results) => {
             if (error) {
                 return reject(error);
             }
@@ -554,13 +556,13 @@ const openAiSummary = async (msg, summaryData) => {
 };
 
 app.get("/api/getCostUsage", (req,res)=>{
-    const { start, end } = req.query;
+    const { start, end, email} = req.query;
 
     const localStart = moment(start).tz('America/Los_Angeles').format('YYYY-MM-DD');
     const localEnd = moment(end).tz('America/Los_Angeles').format('YYYY-MM-DD');
 
-    const query = `SELECT sum(cost) as s_cost, sum(units) as s_usage FROM upload_testing  WHERE date >= ? AND date <= ?`;
-    db.query(query, [localStart, localEnd], (error, result) => {
+    const query = `SELECT sum(cost) as s_cost, sum(units) as s_usage FROM upload_testing  WHERE date >= ? AND date <= ? AND email= ?`;
+    db.query(query, [localStart, localEnd, email], (error, result) => {
         if (error) {
             console.error('Database query error:', error);
             return res.status(500).send('Error fetching scatter data');

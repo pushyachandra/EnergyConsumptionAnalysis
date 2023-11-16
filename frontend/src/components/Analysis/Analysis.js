@@ -75,7 +75,7 @@ const Analysis = () => {
 
     const fetchHeatMapData = async () => {
         try {
-            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/heatmap-data?type=${heatMapType}&start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/heatmap-data?type=${heatMapType}&start=${startDate.toISOString()}&end=${endDate.toISOString()}&email=${localStorage.getItem('loggedEmail')}`);
             const transformedData = transformHeatMapData(response.data);
             setHeatMapData(transformedData.data);
             setXLabels(transformedData.xLabels);
@@ -134,7 +134,7 @@ const Analysis = () => {
 
     const fetchScatterData = async () => {
         try {
-            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/scatter-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/scatter-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&email=${localStorage.getItem('loggedEmail')}`);
             // console.log ("Scatter Data from backend:", response.data); // Log backend data
             setScatterData(transformScatterData(response.data));
         } catch (error) {
@@ -192,7 +192,7 @@ const Analysis = () => {
 
     const fetchBarData = async () => {
         try {
-            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${barDataType}`);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${barDataType}&email=${localStorage.getItem('loggedEmail')}`);
             const reformattedBarData = {};
             Object.keys(response.data).forEach(originalKey => {
                 const date = new Date(originalKey);
@@ -245,7 +245,8 @@ const Analysis = () => {
             const response = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/api/getCostUsage`, {
                 params: {
                     start: startDate.toISOString(),
-                    end: endDate.toISOString()
+                    end: endDate.toISOString(),
+                    email: localStorage.getItem('loggedEmail')
                 }
             });
             const data = response.data[0];
@@ -266,7 +267,7 @@ const Analysis = () => {
 
     const fetchAvailableDates = async () => {
         try {
-            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+'/api/available-dates');
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/available-dates?email=${localStorage.getItem('loggedEmail')}`);
             const dates = response.data.map(dateStr => new Date(dateStr));
             setAvailableDates(dates);
     
@@ -285,7 +286,7 @@ const Analysis = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}&email=${localStorage.getItem('loggedEmail')}`);
                 const data = response.data; 
                 // console.log(data);
                 setPieData({

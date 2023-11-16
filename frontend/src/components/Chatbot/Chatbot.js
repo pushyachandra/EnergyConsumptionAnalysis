@@ -16,11 +16,11 @@ const Chatbot = () => {
         setMessages(messages => [...messages, newMessage]);
 
         try {
-            const response = await axios.post(process.env.REACT_APP_BACKEND_URI+'/chat', { message: userInput });
+            const response = await axios.post(process.env.REACT_APP_BACKEND_URI+'/chat', { message: userInput, email : localStorage.getItem('loggedEmail')});
             const botMessage = { sender: 'chatbot', text: response.data.message };
             if(botMessage.text==='DOWNLOAD'){
                 botMessage.text="Preparing the file for download....";
-                handleDownload(response.data.startDate,response.data.endDate)
+                handleDownload(response.data.startDate,response.data.endDate, localStorage.getItem('loggedEmail'))
             }
             if(botMessage.sender==='chatbot' && botMessage.text==='ROUTE'){
                 botMessage.text="Initiating the route...."
@@ -46,7 +46,7 @@ const Chatbot = () => {
         setUserInput('');
     };
 
-    const handleDownload = async (startDate,endDate) => {
+    const handleDownload = async (startDate,endDate,email) => {
         // Assuming `conversationHistory` has the dates you want to download.
         // You will extract the dates from the last message, for example.
         // const lastMessage = conversationHistory[conversationHistory.length - 1];
@@ -54,7 +54,7 @@ const Chatbot = () => {
 
         try {
             const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/download-data`, {
-                params: { startDate, endDate },
+                params: { startDate, endDate, email },
                 responseType: 'blob', // Important for handling the binary data
             });
 
