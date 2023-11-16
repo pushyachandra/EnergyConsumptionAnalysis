@@ -295,26 +295,14 @@ app.get('/api/heatmap-data', (req, res) => {
     });
 });
 
-// app.post('/chat', (req, res) => {
-//     const userMessage = req.body.message;
-
-//     let responseMessage = "I'm not sure what you mean.";
-//     if (userMessage.toLowerCase().includes("hi")) {
-//         responseMessage = "Hello! How can I help you today?";
-//     }
-
-//     res.json({ message: responseMessage });
-// });
 
 app.post('/chat', async (req, res) => {
     const userMessage = req.body.message;
-    const intent = detectIntent(userMessage);
+    const intent = await detectIntent(userMessage);
 
     if (intent === 'ROUTE') {
-        // If the intent is to navigate, respond with 'ROUTE'
         return res.json({ message: 'ROUTE' });
     } else if (intent === 'DATA') {
-        // If the intent is to get data, proceed with the summary
         try {
             const summaryData = await getDataSummary();
             const openAiResponse = await openAiSummary(userMessage, summaryData);
@@ -323,10 +311,8 @@ app.post('/chat', async (req, res) => {
             console.error('Error processing data summary:', error);
             res.status(500).send('Error processing data summary');
         }
-    } else if (intent === 'DOWNLOAD') {
-        // If the intent is to download data, provide a download link
-        // You need to extract dates from userMessage to implement the download logic
-        const { start, end } = extractDates(userMessage); // Implement this function based on your requirements
+    } else if (intent.toLowerCase().includes('download')) {
+        const { start, end } = extractDates(intent);
         if (start && end) {
             const downloadLink = `/download-data?startDate=${start}&endDate=${end}`;
             return res.json({ message: 'DOWNLOAD', startDate:start, endDate:end });
@@ -334,7 +320,6 @@ app.post('/chat', async (req, res) => {
             return res.json({ message: "I couldn't find the dates you mentioned. Could you please provide the start and end dates for the download?" });
         }
     } else {
-        // If the intent is not recognized, ask the user for clarification
         res.json({ message: "I'm not sure what you're asking for. Can you please clarify if you want to navigate the website, need information on data, or wish to download something?" });
     }
 });
@@ -493,20 +478,39 @@ const getDataSummary = async () => {
 
 let conversationHistory = [];
 
-const detectIntent = (message) => {
-    const navigationKeywords = ['navigate', 'go to', 'visit', 'show me', 'route'];
-    const dataKeywords = ['summary', 'summarize', 'information', 'give me'];
-    const downloadKeywords = ['download', 'export', 'save', 'file'];
-
-    if (navigationKeywords.some(keyword => message.toLowerCase().includes(keyword))) {
-        return 'ROUTE';
-    } else if (dataKeywords.some(keyword => message.toLowerCase().includes(keyword))) {
-        return 'DATA';
-    } else if (downloadKeywords.some(keyword => message.toLowerCase().includes(keyword))) {
-        return 'DOWNLOAD';
+const detectIntent = async (msg) => {
+    let intent = [];
+    intent.push({
+        role: "system",
+        content: "You are here to detect intent of the user, The intent is of only three types." +
+        "1. If the user wants to go to, or asks you to route or for navigation to a different page then you must always respond with 'ROUTE' only" +
+        "2. If the user shows an intent to download the data you must respond with 'DOWNLOAD from <from-date> to <to-date>', the date should always be in the format of YYYY-MM-DD if year is not give consider the year to be 2023 only" +
+        "3. If the user asks for just information from the system you must always respond with 'DATA' only"
+    });
+    intent.push({
+        role: "user",
+        content: msg
+    });
+    try {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            model: 'gpt-3.5-turbo',
+            max_tokens: 150,
+            temperature: 0.5,
+            messages: intent,
+        }, {
+            headers: {
+                'Authorization': `Bearer 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`
+            }
+        });
+        const aiMessage = response.data.choices[0].message.content;
+        return aiMessage;
+    } catch (error) {
+        if (error.response) {
+            console.error('OpenAI API responded with:', error.response.status, error.response.data);
+        }
+        throw error;
     }
-    return null;  // Intent not recognized
-};
+}
 
 const openAiSummary = async (msg, summaryData) => {
     // Add system context message only once at the beginning or when resetting the conversation
@@ -548,6 +552,22 @@ const openAiSummary = async (msg, summaryData) => {
         throw error;
     }
 };
+
+app.get("/api/getCostUsage", (req,res)=>{
+    const { start, end } = req.query;
+
+    const localStart = moment(start).tz('America/Los_Angeles').format('YYYY-MM-DD');
+    const localEnd = moment(end).tz('America/Los_Angeles').format('YYYY-MM-DD');
+
+    const query = `SELECT sum(cost) as s_cost, sum(units) as s_usage FROM upload_testing  WHERE date >= ? AND date <= ?`;
+    db.query(query, [localStart, localEnd], (error, result) => {
+        if (error) {
+            console.error('Database query error:', error);
+            return res.status(500).send('Error fetching scatter data');
+        }
+        res.json((result));
+    });
+});
 
 // Function to reset the conversation history
 const resetConversation = () => {
