@@ -1,5 +1,6 @@
 .topbar{
     height: 15vh;
+    background-color: blue;
 }
 
 .sidebar{
@@ -10,8 +11,13 @@
 }
 
 .content{
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     height:85vh;
     float: right;
     width: 85%;
+    background-image: url('./background.webp');
+    background-size: cover;
+    background-position: center;
+    /* backfilter: blur(8px); */
+    /* -webkit-filter: blur(8px); */
 }

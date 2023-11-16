@@ -12,10 +12,12 @@ import Home from './components/Home/Home';
 import Analysis from './components/Analysis/Analysis';
 import Chatbot from './components/Chatbot/Chatbot';
 import Profile from './components/Profile/Profile';
+import Insights from './components/Insights/Insights';
 
 function App() {
     return (
-    <BrowserRouter>
+    <div>
+        <BrowserRouter>
         <div className="topbar">
             <TopBar />
         </div>
@@ -30,10 +32,12 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/analysis" element={<Analysis />} />
                 <Route path="/chatbot" element={<Chatbot />} />
+                <Route path="/insights" element={<Insights />} />
                 <Route path="/profile" element={<Profile />} />
             </Routes>
         </div>
     </BrowserRouter>
+    </div>
   );
 }
 

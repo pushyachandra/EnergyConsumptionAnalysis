@@ -6,14 +6,11 @@ import './SideBar.css'; // Ensure this import is correct based on your file stru
 const SideBar = () => {
     return (
         <div>
-            {isLogin() ? <SideBarItems /> :  (
-                <div className="sidebar-message">
-                    "ENERGY
-                    <br />
-                    CONSUMPTION
-                    <br />
-                    ANALYSIS"
-                </div>)}
+            {isLogin() ? <SideBarItems /> : 
+                (
+                    <div>Tips</div>
+                )
+            }
         </div>
     )
 }

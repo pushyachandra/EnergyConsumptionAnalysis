@@ -4,7 +4,7 @@ import { isLogin } from '../Auth'
 
 const TopBar = () => {
     return (
-    <div>
+    <div className='top-bar-main'>
         {isLogin() ? <Logout /> : null}
     </div>
     )
