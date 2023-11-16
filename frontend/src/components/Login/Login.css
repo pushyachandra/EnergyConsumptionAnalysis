@@ -23,16 +23,15 @@ body, html {
     box-sizing: border-box;
 }
 
-/* .login-background {
+.login-background {
     width: 100%;
-    height: 100vh;
-    background-image: url('./background-image.png');
+    height: 80vh;
     background-size: cover;
     background-position: top;
     display: flex;
     align-items: center;
     justify-content: center;
-} */
+}
 
 .login-container {
     background: rgba(255, 255, 255, 0.9); 
@@ -72,15 +71,23 @@ body, html {
 }
 
 .forgot-password {
-    display: block;
-    /* text-align: right; */
-    font-size: 0.8rem;
-    text-decoration: none;
-    /* color: #007bff; */
-    margin-top: 0.5rem;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #b2992c;
+    color: white;
+    font-weight: bold;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-button {
+.forgot-password:hover{
+    background-color: #907d29;
+}
+
+.button-log {
     width: 100%;
     padding: 15px;
     border: none;
@@ -93,6 +100,6 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.button-log:hover {
     background-color: #218838;
 } 

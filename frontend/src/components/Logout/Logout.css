@@ -1,26 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 .logout-section {
-    background-color: #333; /* Dark background for the logout section */
+    background-color: #333; 
     color: white;
-    padding: 30px 20px; /* Adjust padding as needed */
+    padding: 30px 20px; 
     text-align: center;
-    /* position: fixed; */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1500;
-    /* display: flex; */
-    justify-content: space-between; /* Aligns children to the sides */
-    align-items: center; /* Vertically centers children */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: adds depth */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .logout-title {
-    font-size: 1.7em; /* Adjust the font size as needed */
-    flex-grow: 1; /* Allows the title to take up the available space */
-    text-align: center; /* Ensures title is centered */
-    font-family: 'Roboto', sans-serif; /* Your chosen Google Font */
+    font-size: 1.7em;
+    flex-grow: 1;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
     margin-left: 200px;
 }
 
@@ -30,28 +30,142 @@
 }
 
 .logout-container span {
-    margin-right: 10px; /* Adds some space before the logout button */
-    font-size: 1em; /* Adjust the font size as needed */
+    margin-right: 10px;
+    font-size: 1em;
 }
 
 .logout-container button {
-    padding: 5px 15px; /* Reduced padding for a smaller button */
-    background-color: #f44336; /* Red color for logout button */
+    padding: 5px 15px;
+    background-color: #f44336;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 0.8em; /* Smaller font size for the button text */
-    text-transform: uppercase; /* Optional: capitalizes button text */
+    font-size: 0.8em;
+    text-transform: uppercase;
 }
 
 .logout-container button:hover {
-    background-color: #c62828; /* Darker shade on hover */
+    background-color: #c62828;
 }
 
-/* Assuming you have a sidebar that may overlap */
 .sidebar {
-    z-index: 1000; /* Ensure this is less than logout-section's z-index */
+    z-index: 1000;
+}
+ */
+
+/* .logout-section{
+    width:25%;
+    height:15vh;
+    float: right;
+} */
+
+/* .email-section{
+    height:7.5vh;
+    text-align: center;
 }
 
+.email-display-item-1{
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-radius: 10px;
+    height:3.75vh;
+    margin:20px;
+}
+
+.email-display-item-2{
+    padding:5px;
+    background-color: yellow;
+    border-radius: 10px;
+    height:3.75vh;
+    margin:20px;
+} */
+
+/* .logout-button-section{
+    height:7.5vh;
+    text-align: center;
+}
+
+.logout-button {
+    background-color: #DC3545;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin:10px;
+}
+
+.logout-button:hover {
+    background-color: #a42431;
+} */
+
+
+/* Continue using the previous styles for .email-section, .email-display-item-1, and .email-display-item-2 */
+
+
+.email-section {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 5px 10px;
+    background-color: #f7f7f7; /* Light grey background */
+    border-radius: 20px;
+    margin: 10px 0;
+    margin-right: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+}
+
+.email-display-item-1 {
+    flex: 0 0 auto; /* don't grow, don't shrink, auto basis */
+    margin-right: 15px; /* space between label and value */
+    font-weight: bold; /* make label bold */
+    color: #333; /* dark grey for text */
+    font-size: 1rem; /* readable font size */
+}
+
+.email-display-item-2 {
+    flex: 1; /* take up remaining space */
+    background-color: #fff; /* white background for the email */
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid #ddd; /* subtle border */
+    color: #555; /* slightly lighter text color */
+    overflow-x: auto; /* make it scrollable horizontally if email is too long */
+    font-size: 0.9rem; /* slightly smaller font size for the email */
+}
+
+.user-info-section {
+    display: flex;
+    justify-content: flex-end; /* Aligns children to the right */
+    align-items: center; /* Centers children vertically */
+    padding: 10px;
+    /* background-color: #f9f9f9; */
+    border-radius: 8px;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    /* margin-bottom: 20px; */
+}
+
+.logout-button-section {
+    text-align: center; /* Center align the button */
+}
+
+.logout-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+/* Continue using the previous styles for .email-display-item-1, and .email-display-item-2 */

@@ -45,10 +45,6 @@ const SideBarItems = () => {
             const goToChatbot = () => {
                 window.location.href='/chatbot'
             }
-        
-            const goToProfile = () => {
-                window.location.href='/profile'
-            }
 
             const goToInsights = () => {
                 window.location.href='/insights'
@@ -61,7 +57,6 @@ const SideBarItems = () => {
             <button className='sidebar-btn' onClick={goToAnalysis}>Analysis</button>
             <button className='sidebar-btn' onClick={goToChatbot}>Chatbot</button>
             <button className='sidebar-btn' onClick={goToInsights}>Insights</button>
-            <button className='sidebar-btn' onClick={goToProfile}>Profile</button>
         </div>
     )
 }

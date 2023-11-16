@@ -101,7 +101,7 @@ const Login = () => {
                     console.log("Success")
                     localStorage.setItem("loggedIn","true");
                     localStorage.setItem("loggedEmail",email)
-                    window.location.href='/';
+                    window.location.href='/home';
                 }
                 else if(response.data==="no"){
                     alert("Email and/or Password does not match");
@@ -146,9 +146,9 @@ const Login = () => {
                               placeholder='Password' 
                               required 
                             />
+                            <button type='button' className="button-log" onClick={loginOpr}>Login</button>
                             <button type="button" onClick={signUp} className='forgot-password'>Sign Up</button>
                         </div>
-                        <button type='button' onClick={loginOpr}>Login</button>
                     </form>
                 </div>
             </div>

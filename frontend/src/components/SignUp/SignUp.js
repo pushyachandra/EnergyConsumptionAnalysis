@@ -72,30 +72,61 @@ const SignUp = () => {
     }
 
     return (
-        <div className='container-signup'>
-            <h2>Sign Up</h2>
-            <div className='login-comp username'>
-                First Name
-                <input type='text' value={firstName} onChange={e => setFirstName(e.target.value)} required="required"/>
+        <div className='lg-login-background'> {/* Assuming you want the full-page background like the login page */}
+            <div className='lg-login-container'> {/* Use the login-container for consistent padding and max-width */}
+                <div className='lg-login-box'> {/* The box to contain the form elements */}
+                    <h2 className='lg-login-title'>Sign Up</h2>
+                    <div className='lg-login-form'> {/* The form to contain the inputs and buttons */}
+                        <div className='lg-input-group'>
+                            <input 
+                              type='text' 
+                              placeholder="First Name" 
+                              value={firstName} 
+                              onChange={e => setFirstName(e.target.value)} 
+                              required 
+                            />
+                        </div>
+                        <div className='lg-input-group'>
+                            <input 
+                              type='text' 
+                              placeholder="Last Name" 
+                              value={lastName} 
+                              onChange={e => setLastName(e.target.value)} 
+                              required 
+                            />
+                        </div>
+                        <div className='lg-input-group'>
+                            <input 
+                              type='email' 
+                              placeholder="Email" 
+                              value={email} 
+                              onChange={e => setEmail(e.target.value)} 
+                              required 
+                            />
+                        </div>
+                        <div className='lg-input-group'>
+                            <input 
+                              type='password' 
+                              placeholder="Password" 
+                              value={password} 
+                              onChange={e => setPassword(e.target.value)} 
+                              required 
+                            />
+                        </div>
+                        <div className='lg-input-group'>
+                            <input 
+                              type='password' 
+                              placeholder="Re-enter Password" 
+                              value={rePassword} 
+                              onChange={e => setRePassword(e.target.value)} 
+                              required 
+                            />
+                        </div>
+                        <button type="button" onClick={confirmSignUp} className='lg-button-log'>Confirm</button>
+                        <button type="button" onClick={backToLoginOpr} className='lg-forgot-password'>Back to Login</button>
+                    </div>
+                </div>
             </div>
-            <div className='login-comp username'>
-                Last Name
-                <input type='text' value={lastName} onChange={e => setLastName(e.target.value)} required="required"/>
-            </div>
-            <div className='login-comp username'>
-                Email
-                <input type='text' value={email} onChange={e => setEmail(e.target.value)} required="required"/>
-            </div>
-            <div className='login-comp password'>
-                Password
-                <input type='password' value={password} onChange={e => setPassword(e.target.value)} required="required"/>
-            </div>
-            <div className='login-comp password'>
-                Re-Enter Password
-                <input type='password' value={rePassword} onChange={e => setRePassword(e.target.value)} required="required"/>
-            </div>
-            <button className='login-comp' onClick={confirmSignUp}>Confirm</button>
-            <button className='login-comp' onClick={backToLoginOpr}>Back to Login</button>
         </div>
     )
 }
