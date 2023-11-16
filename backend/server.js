@@ -64,6 +64,23 @@ app.post("/api/signUpUser",(req,res)=>{
     });
 });
 
+app.get('/api/getFileName', (req,res) => {
+    const {email} = req.query;
+    // console.log(JSON.stringify(email))
+    const query = "select file_name from user_data_tracker where processed=0 and email='"+email+"' limit 1;";
+    // console.log(query)
+    db.query(query,(error,result)=>{
+        if(error==null){
+            // console.log(result.data)
+            res.send(result);
+        }
+        else{
+            res.send("An error has occured");
+            console.log(error)
+        }
+    });
+});
+
 app.get('/api/loginUser', (req,res) => {
     // console.log(req.query);
 
@@ -131,6 +148,32 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
     });
 
     blobStream.end(req.file.buffer);
+});
+
+app.post('/api/process-files', (req, res) => {
+    const { email,file_name } = req.body;
+
+    // Construct the command with the email parameter
+    const pythonCommand = `python ..//services/process_data.py --email ${email} --file ${file_name}`;
+    // console.log(pythonCommand)
+    exec(pythonCommand, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            return res.status(500).send('Error processing files');
+        }
+        console.log(`stdout: ${stdout}`);
+        console.error(`stderr: ${stderr}`);
+        const query=`update  user_data_tracker set processed=1 where email='${email}' and file_name='${file_name}'`;
+        console.log(query)
+        db.query(query,(error,result)=>{
+            // res.send(JSON.stringify(result));
+            if(error){
+                console.error(`exec error: ${error}`);
+                return res.status(500).send('Error processing files');
+            }
+            res.send('Files processed successfully');
+        });
+    });
 });
 
 app.get('/api/data', (req, res) => {

@@ -57,3 +57,18 @@
     margin-right: 20px; /* Add some space to the right of the logo */
     float: left; /* Align logo to the left side */
 }
+
+.web-page-title{
+    /* min-width: none; */
+    max-width: 30%;
+    float:left;
+    /* margin:auto; */
+    font-size: 20px;
+    margin-top:20px;
+    /* margin-bottom: 10px; */
+    padding:10px;
+    /* background-color: rgb(108, 77, 108); */
+    /* border-radius: 25px; */
+    font-family: "Lucida Console", Monospace;
+    font-weight: bold;
+}

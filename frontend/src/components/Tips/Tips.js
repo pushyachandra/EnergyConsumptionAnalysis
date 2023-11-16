@@ -44,24 +44,29 @@ const Tips = () => {
     }, [currentTip]);
 
     return (
-        <div className='tips-container'>
-            <div className='pagination'>
-                <button onClick={goToPrevTip} disabled={currentPage === 1}>
-                    Previous
-                </button>
-                <p>Page {currentPage} of {totalPages}</p>
-                <button onClick={goToNextTip} disabled={currentPage === totalPages}>
-                    Next
-                </button>
+        <div className='tips-main-cont'>
+            <div className='tips-main-title'>
+                Tips
             </div>
-            {currentTip ? (
-                <div className='tip'>
-                    <h2 className='tip-title'>{currentTip.tip_title}</h2>
-                    <p className='tip-content'>{currentTip.tip_content}</p>
+            <div className='tips-container'>
+                <div className='pagination'>
+                    <button onClick={goToPrevTip} disabled={currentPage === 1}>
+                        Previous
+                    </button>
+                    <p>Page {currentPage} of {totalPages}</p>
+                    <button onClick={goToNextTip} disabled={currentPage === totalPages}>
+                        Next
+                    </button>
                 </div>
-            ) : (
-                <p>No tips available.</p>
-            )}
+                {currentTip ? (
+                    <div className='tip'>
+                        <h2 className='tip-title'>{currentTip.tip_title}</h2>
+                        <p className='tip-content'>{currentTip.tip_content}</p>
+                    </div>
+                ) : (
+                    <p>No tips available.</p>
+                )}
+            </div>
         </div>
     );
 };

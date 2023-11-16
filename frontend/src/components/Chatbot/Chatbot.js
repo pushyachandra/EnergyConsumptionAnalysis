@@ -30,8 +30,8 @@ const Chatbot = () => {
                 else if(newMessage.text.toLowerCase().includes('home')){
                     setTimeout(() => { window.location.href='/home'; }, 2000);
                 }
-                else if(newMessage.text.toLowerCase().includes('profile')){
-                    setTimeout(() => { window.location.href='/profile'; }, 2000);
+                else if(newMessage.text.toLowerCase().includes('insights')){
+                    setTimeout(() => { window.location.href='/insights'; }, 2000);
                 }
                 else{
                     alert('Incorrect Route Provided');
@@ -75,6 +75,9 @@ const Chatbot = () => {
 
     return (
         <div className="chatbot-container">
+            <div className='chatbot-title'>
+                Energy Analyzer Chatbot
+            </div>
             <div className="chat-window">
                 <div className="messages">
                     {messages.map((msg, index) => (

@@ -1,6 +1,6 @@
 function checkLogin(){
     if(localStorage.getItem('loggedIn')===null || localStorage.getItem('loggedEmail')===null){
-        window.location.href='/login';
+        window.location.href='/';
     }
 }
 
@@ -18,7 +18,7 @@ function isLogin(){
 
 function redirectIfNotLoggedIn(){
     if(!isLogin()){
-        window.location.href='/login';
+        window.location.href='/';
     }
 }
 
