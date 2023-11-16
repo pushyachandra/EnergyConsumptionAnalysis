@@ -10,16 +10,15 @@
 }
 
 .container-analysis {
-    background-color: var(--background-main);
-    padding: 20px;
-    margin: 10px;
-    height: calc(100vh - 20px); /* Full height adjusted for padding and margin */
-    width: calc(100% - 20px); /* Full width adjusted for padding and margin */
-    position: relative;
-    border-radius: var(--border-radius);
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
+    /* background-color: red; */
+    background-color: rgba(163, 163, 163, 0.9);
+    padding:10px;
+    margin:10px;
+    height:calc(100% - 20px);
+    width:calc(100% - 40px);
+    position:relative;
+    border-radius: 15px;
+    overflow-y: auto; /* Stack children vertically */
 }
 
 .charts-container {
@@ -155,3 +154,70 @@
 /* ... additional styles ... */
 
 /* You may need to adjust the sizes of the charts within their components' options for the best fit */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px ;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(62, 61, 61);
+}
+
+.button-container{
+    display: flex;
+    /* float:right; */
+    width:120px;
+}
+
+.sub-title-text{
+    margin: 0px;
+    text-align: center;
+}
+
+.heat-map-container {
+    overflow: auto;
+  }
+  
+  .heat-map-box {
+    display: inline-block;
+    margin: 0 auto;
+  }
+  
+  /* Adjust the xLabels class based on the actual class used by the component */
+  .heat-map-box .xLabels {
+    text-align: center;
+    margin-top: 20px; /* Adjust this to control the space above the xLabels */
+  }
+  
+  /* Rotate x-axis labels */
+  .heat-map-box .xLabels div {
+    transform: rotate(-45deg);
+    transform-origin: bottom left;
+  }
+  
+  /* Add space between y-axis labels and the grid */
+  .heat-map-box .yLabels {
+    text-align: right;
+    padding-right: 10px; /* Adjust as necessary */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .heat-map-box .xLabels div {
+      font-size: 10px; /* Adjust font size as needed */
+    }
+  }

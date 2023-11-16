@@ -52,7 +52,6 @@ const Analysis = () => {
 
     const fetchHeatMapData = async () => {
         try {
-            //const response = await axios.get(`http://localhost:8080/api/heatmap-data?type=${heatMapType}&start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
             const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/heatmap-data?type=${heatMapType}&start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
             const transformedData = transformHeatMapData(response.data);
             setHeatMapData(transformedData.data);
@@ -64,41 +63,54 @@ const Analysis = () => {
     };
 
     const transformHeatMapData = (data) => {
-        // Assuming each data point is an object with date, hour, and value
-        const xLabels = new Set(); // Unique dates
-        const yLabels = []; // Hours of the day
-        const heatmapData = [];
-    
-        // Generate yLabels for 24 hours
+    // Initialize xLabels for 24 hours
+        const xLabels = [];
         for (let i = 0; i < 24; i++) {
-            yLabels.push(`${i}-${i + 1}`);
+            if (i === 23) {
+                // Handle the transition from 23:00 to 24:00
+                xLabels.push(`${i}:00 to ${i + 1}:00`);
+            } else {
+                xLabels.push(`${i}:00 to ${i + 1}:00`);
+            }
         }
-    
-        // Initialize heatmapData with zeros
-        for (let i = 0; i < yLabels.length; i++) {
-            heatmapData.push(Array(24).fill(0)); // Assuming 24 hours in a day
-        }
-    
+
+        // Collect unique dates for yLabels
+        const yLabelsSet = new Set();
         data.forEach(item => {
-            if (item && item.date && item.hour !== undefined) {
-                const dateStr = item.date.split('T')[0]; // Adjust according to your date format
-                xLabels.add(dateStr);
-                const xIndex = Array.from(xLabels).indexOf(dateStr);
-                const hour = parseInt(item.hour);
-                heatmapData[hour][xIndex] = item.value;
+            if (item && item.date) {
+                const dateStr = item.date.split('T')[0];
+                yLabelsSet.add(dateStr);
             }
         });
-    
+
+        // Convert yLabels Set to Array
+        const yLabels = Array.from(yLabelsSet).sort();
+
+        // Initialize heatmapData
+        const heatmapData = Array.from({ length: yLabels.length }, () => Array(xLabels.length).fill(0));
+
+        // Populate heatmapData
+        data.forEach(item => {
+            if (item && item.date && item.hour !== undefined) {
+                const dateStr = item.date.split('T')[0];
+                const yIndex = yLabels.indexOf(dateStr);
+                const hour = parseInt(item.hour);
+                if (yIndex !== -1 && hour >= 0 && hour < xLabels.length) {
+                    heatmapData[yIndex][hour] = item.value;
+                }
+            }
+        });
+        console.log(heatmapData)
         return {
             data: heatmapData,
-            xLabels: Array.from(xLabels),
+            xLabels: xLabels,
             yLabels: yLabels
+            // background: "#329fff"
         };
     };
 
     const fetchScatterData = async () => {
         try {
-            //const response = await axios.get(`http://localhost:8080/api/scatter-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
             const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/scatter-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}`);
             // console.log ("Scatter Data from backend:", response.data); // Log backend data
             setScatterData(transformScatterData(response.data));
@@ -126,22 +138,22 @@ const Analysis = () => {
                 {
                     label: 'Morning ',
                     data: timePeriods.Morning,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)' // Color for Morning
+                    backgroundColor: 'rgba(135, 206, 235, 0.5)' // Color for Morning
                 },
                 {
                     label: 'Afternoon',
                     data: timePeriods.Afternoon,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)' // Color for Afternoon
+                    backgroundColor: 'rgba(255, 165, 0, 0.5)' // Color for Afternoon
                 },
                 {
                     label: 'Evening',
                     data: timePeriods.Evening,
-                    backgroundColor: 'rgba(255, 206, 86, 0.5)' // Color for Evening
+                    backgroundColor: 'rgba(255, 69, 0, 0.5)' // Color for Evening
                 },
                 {
                     label: 'Night',
                     data: timePeriods.Night,
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)' // Color for Night
+                    backgroundColor: 'rgba(0, 0, 128, 0.5)' // Color for Night
                 }
             ]
         };
@@ -157,9 +169,14 @@ const Analysis = () => {
 
     const fetchBarData = async () => {
         try {
-            //const response = await axios.get(`http://localhost:8080/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
-            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
-            setBarData(response.data);
+            const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/bar-data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${barDataType}`);
+            const reformattedBarData = {};
+            Object.keys(response.data).forEach(originalKey => {
+                const date = new Date(originalKey);
+                const formattedKey = date.toISOString().split('T')[0]; // Converts to 'YYYY-MM-DD' format
+                reformattedBarData[formattedKey] = response.data[originalKey];
+            });
+            setBarData(reformattedBarData);
         } catch (error) {
             console.error('Error fetching bar chart data:', error);
         }
@@ -179,22 +196,22 @@ const Analysis = () => {
                 {
                     label: 'Morning',
                     data: morningData,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    backgroundColor: 'rgba(135, 206, 235, 0.5)',
                 },
                 {
                     label: 'Afternoon',
                     data: afternoonData,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    backgroundColor: 'rgba(255, 165, 0, 0.5)',
                 },
                 {
                     label: 'Evening',
                     data: eveningData,
-                    backgroundColor: 'rgba(255, 206, 86, 0.5)',
+                    backgroundColor: 'rgba(255, 69, 0, 0.5)',
                 },
                 {
                     label: 'Night',
                     data: nightData,
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    backgroundColor: 'rgba(0, 0, 128, 0.5)',
                 }
             ]
         };
@@ -206,7 +223,6 @@ const Analysis = () => {
 
     const fetchAvailableDates = async () => {
         try {
-            //const response = await axios.get('http://localhost:8080/api/available-dates');
             const response = await axios.get(process.env.REACT_APP_BACKEND_URI+'/api/available-dates');
             const dates = response.data.map(dateStr => new Date(dateStr));
             setAvailableDates(dates);
@@ -226,19 +242,18 @@ const Analysis = () => {
 
     const fetchData = async () => {
         try {
-            //const response = await axios.get(`http://localhost:8080/api/data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
             const response = await axios.get(process.env.REACT_APP_BACKEND_URI+`/api/data?start=${startDate.toISOString()}&end=${endDate.toISOString()}&type=${dataType}`);
-                const data = response.data;
+                const data = response.data; 
                 // console.log(data);
                 setPieData({
                     labels: Object.keys(data),
                     datasets: [{
                         data: Object.values(data),
                         backgroundColor: [
-                            '#87CEEB', // Gold for Morning
-                            '#FFA500', // Orange for Noon
-                            '#FF4500', // Orange Red for Evening
-                            '#000080', // Navy for Night
+                            'rgba(135, 206, 235, 0.7)',
+                            'rgba(255, 165, 0, 0.7)',
+                            'rgba(255, 69, 0, 0.7)',
+                            'rgba(0, 0, 128, 0.7)',
                         ],
                         borderColor: [
                             '#FFFFFF', // White borders for all
@@ -280,46 +295,53 @@ const Analysis = () => {
                 />
             </div>
             <div className="charts-container">
-            <div className='tp chart-container'>
-                <div>
-                    <button className='analysis-button' onClick={() => setDataType('cost')}>Show Cost</button>
-                    <button className='analysis-button' onClick={() => setDataType('usage')}>Show Usage</button>
+                <div className='tp chart-container'>
+                    <h2 className='sub-title-text'>Pie Chart</h2>
+                    <div className='button-container'>
+                        <button className='analysis-button' onClick={() => setDataType('cost')}>Show Cost</button>
+                        <button className='analysis-button' onClick={() => setDataType('usage')}>Show Usage</button>
+                    </div>
+                    {pieData && <Pie data={pieData} />}
                 </div>
-                <h2>Pie Chart</h2>
-                {pieData && <Pie data={pieData} />}
-            </div>
-            <div className='chart-container scatter'>
-                {/* Scatter Plot */}
-                {scatterData && scatterData.datasets && scatterData.datasets.length > 0 ? (
-                    <Scatter data={scatterData} options={{
-                        scales: {
-                            x: { type: 'linear', position: 'bottom', title: { display: true, text: 'Energy Consumption' } },
-                            y: { title: { display: true, text: 'Cost' } }
-                        }
-                    }} />
-                ) : (
-                    <p>Loading scatter plot data...</p>
-                )}
-            </div>
+                <div className='chart-container scatter'>
+                    <h2 className='sub-title-text'>Scatter Plot</h2>
+                    {scatterData && scatterData.datasets && scatterData.datasets.length > 0 ? (
+                        <Scatter data={scatterData} options={{
+                            scales: {
+                                x: { type: 'linear', position: 'bottom', title: { display: true, text: 'Energy Consumption' } },
+                                y: { title: { display: true, text: 'Cost' } }
+                            }
+                        }} />
+                    ) : (
+                        <p>Loading scatter plot data...</p>
+                    )}
+                </div>
             </div>
             <div className='tp'>
-                <div>
+                <h2 className='sub-title-text'>Heat Map</h2>
+                <div className='button-container'>
                     <button className='analysis-button' onClick={() => setHeatMapType('usage')}>Show Usage</button>
                     <button className='analysis-button' onClick={() => setHeatMapType('cost')}>Show Cost</button>
                 </div>
-                <HeatMap
+                <HeatMap className='heat-map-container'
                     xLabels={xLabels}
                     yLabels={yLabels}
                     data={heatMapData}
-                    // ... other heatmap properties as needed ...
+                    // squares
+                    height={30} // Adjust the height as necessary
+                    cellStyle={(background, value, min, max, data, x, y) => ({
+                        background: `rgba(50, 50, 150, ${1 - (max - value) / (max - min)})`,
+                        fontSize: "11px",
+                    })}
+                    cellRender={value => value && `${value.toFixed(2)}`}
                 />
             </div>
             <div className='bp-1'>
-                <div>
+            <h2 className='sub-title-text'>Stacked Bar Graph</h2>
+                <div className='button-container'>
                     <button className='analysis-button' onClick={() => setBarDataType('cost')}>Show Cost</button>
                     <button className='analysis-button' onClick={() => setBarDataType('usage')}>Show Usage</button>
                 </div>
-                Stacked Bar Chart
                 <Bar data={generateBarChartData()} options={{ 
                     scales: { x: { stacked: true }, y: { stacked: true } }
                 }} />

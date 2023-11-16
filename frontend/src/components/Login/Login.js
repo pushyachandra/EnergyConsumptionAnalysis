@@ -146,7 +146,7 @@ const Login = () => {
                               placeholder='Password' 
                               required 
                             />
-                            <a href='#' className='forgot-password'>Forgot Password?</a>
+                            <button type="button" onClick={signUp} className='forgot-password'>Sign Up</button>
                         </div>
                         <button type='button' onClick={loginOpr}>Login</button>
                     </form>

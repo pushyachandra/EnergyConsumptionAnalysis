@@ -151,8 +151,6 @@ app.get('/api/data', (req, res) => {
             return res.status(500).send('Error fetching data');
         }
 
-        // console.log('Query results:', results);
-
         let data = {
             Morning: 0,
             Afternoon: 0,
@@ -224,7 +222,6 @@ app.get('/api/bar-data', (req, res) => {
             barData[date] = barData[date] || { Morning: 0, Afternoon: 0, Evening: 0, Night: 0 };
             barData[date][timeOfDay] += parseFloat(row.value);
         });
-
         res.json(barData);
     });
 });

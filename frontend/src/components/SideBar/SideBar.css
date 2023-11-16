@@ -2,16 +2,16 @@
 .sidebar {
     background-color: #333; /* Dark background for the sidebar */
     color: white;
-    min-height: 100vh; /* Full height */
-    width: 200px; /* Sidebar width */
-    position: fixed; /* Fixed position */
+    min-height: 80vh; /* Full height */
+    /* width: 200px; Sidebar width */
+    /* position: fixed; */
     top: 0;
     left: 0;
     padding: 1rem;
     box-sizing: border-box;
 }
 .sidebar-container {
-    padding-top: 120px; /* Adjust this value based on the height of your logout section */
+    /* padding-top: 120px;  */
 }
 .sidebar button {
     background-color: #4CAF50; /* Green background for buttons */

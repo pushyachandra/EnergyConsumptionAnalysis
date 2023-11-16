@@ -31,8 +31,8 @@ const Logout = () => {
     }
 
     return (
-        <div className={loggedIn ? "logout-section" : "logout-section hidden"}>
-            <div className="logout-title">"ENERGY CONSUMPTION ANALYSIS"</div>
+        // <div className={loggedIn ? "logout-section" : "logout-section hidden"}>\
+        <div>
             {loggedIn && (
                 <div className="logout-container">
                     <span>Logged In as: {loggedEmail}</span>
