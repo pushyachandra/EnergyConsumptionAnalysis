@@ -499,7 +499,7 @@ const detectIntent = async (msg) => {
             messages: intent,
         }, {
             headers: {
-                'Authorization': `Bearer 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`
+                'Authorization': `Bearer ${process.env.API_KEY}`
             }
         });
         const aiMessage = response.data.choices[0].message.content;
