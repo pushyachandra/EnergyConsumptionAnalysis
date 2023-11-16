@@ -32,3 +32,13 @@
     /* backfilter: blur(8px); */
     /* -webkit-filter: blur(8px); */
 }
+
+.content-full{
+    height:90vh;
+    float: right;
+    width: 100%;
+    background-image: url('./background.webp');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}

@@ -6,7 +6,7 @@ const Logout = () => {
     const logoutOpr = () => {
         localStorage.setItem('loggedEmail',null)
         localStorage.setItem('loggedIn',null)
-        window.location.href='/login'
+        window.location.href='/'
     }
 
     return (

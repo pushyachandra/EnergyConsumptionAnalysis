@@ -579,6 +579,31 @@ const getConversationHistory = () => {
     return conversationHistory;
 };
 
+app.get('/api/tips', (req, res) => {
+    const page = req.query.page || 1;
+    const limit = 1; // Number of tips per page
+    const offset = (page - 1) * limit;
+
+    // Query to get tips with pagination
+    const query = 'SELECT SQL_CALC_FOUND_ROWS * FROM tips_table LIMIT ? OFFSET ?';
+    db.query(query, [limit, offset], (error, results) => {
+        if (error) throw error;
+        
+        // Query to get total count
+        db.query('SELECT count(*) as total from tips_table', (countError, countResults) => {
+            if (countError) throw countError;
+            
+            const total = countResults[0].total;
+            const totalPages = Math.ceil(total / limit);
+            // console.log(totalPages)
+            res.json({
+                tips: results,
+                totalPages: totalPages
+            });
+        });
+    });
+});
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })

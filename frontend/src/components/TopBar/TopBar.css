@@ -7,3 +7,53 @@
 .top-bar-main{
     align-items: center;
 }
+
+
+.login-box-top{
+    max-width: 30%;
+    float: right;
+}
+
+.login-button-top {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin:20px;
+}
+
+.login-button-top:hover {
+    background-color: #218838;
+}
+
+.login-box-top-signup{
+    max-width: 30%;
+    float: right;
+}
+
+.login-button-top-signup {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin:20px;
+}
+
+.login-button-top-signup:hover {
+    background-color: #218838;
+}
+
+.logo {
+    cursor: pointer;
+    height: 10vh; /* Set the size of your logo */
+    margin-right: 20px; /* Add some space to the right of the logo */
+    float: left; /* Align logo to the left side */
+}
